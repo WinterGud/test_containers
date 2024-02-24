@@ -8,6 +8,16 @@ set(SOURCES
 	main.cpp
 	Test.hpp
 	Test.cpp
+	CheckDeque.h
+	CheckDeque.cpp
+	CheckList.h
+	CheckList.cpp
+	CheckVector.h
+	CheckVector.cpp
+	CheckUnorderedSet.h
+	CheckUnorderedSet.cpp
+	CheckSet.h
+	CheckSet.cpp
 )
 
 add_executable(Main ${SOURCES})
