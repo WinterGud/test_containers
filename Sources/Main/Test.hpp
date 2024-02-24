@@ -1,23 +1,22 @@
 #pragma once
-#include "checkVector"
-
+#include "CheckVector.h"
+#include "CheckList.h"
+#include "CheckDeque.h"
+#include "CheckUnorderedSet.h"
+#include "CheckSet.h"
 
 class Test
 {
 public:
-    static void runTest();
-
+    void runTest();
+    unsigned long long NUM = 100000;
 	
 private:
-    constexpr unsigned long long NUM_TO_TEST = 100000;
-    struct structForTest
-    {
-        int arr[1000];
-    };
-    using whatTesting = int;
-    class CheckVector;
-    class CheckList;
-    class CheckDeque;
-    class CheckUnorderedSet;
-    class CheckSet;
+    
+    CheckVector m_checkVector = CheckVector(NUM);
+    CheckList m_checkList = CheckList(NUM);
+    CheckDeque m_checkDeque = CheckDeque(NUM);
+    CheckUnorderedSet m_checkUnorderedSet = CheckUnorderedSet(NUM);
+    CheckSet m_checkSet = CheckSet(NUM);
+    
 };
