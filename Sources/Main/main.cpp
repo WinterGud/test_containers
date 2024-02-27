@@ -102,17 +102,17 @@ void insertInMiddle(Container container, T p_T)
 	std::cout << time_span.count() << " seconds.\n";
 }
 
-template <typename Container,typename T>
-void alternativeInsertInMiddle(Container container, T p_T)
+template <typename Container, typename T>
+void alternativeInsertInMiddle(Container& container, T p_T)
 {
 	using namespace std::chrono;
 	steady_clock::time_point timeStart = steady_clock::now();
-
-	auto it = container.begin();
+	
+	auto it = container.begin();	
 	for (auto i = 0; i < NUM_TO_TEST; i++)
 	{
 		container.insert(it, T());
-		if (i > 5)
+		if (i > 5 && it != container.end())
 		{
 			it++;
 		}
@@ -160,7 +160,7 @@ void structVector();
 
 void testVector()
 {
-	std::vector<int> v1=;
+	std::vector<int> v1(NUM_TO_TEST);
 	v1.clear();
 	std::cout << "PushBack\t";
 	pushBack(v1, 0);
