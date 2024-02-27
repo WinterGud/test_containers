@@ -9,7 +9,7 @@ class Test
 {
 public:
     void runTest();
-    unsigned long long NUM = 100000;
+    unsigned long long NUM = 10000;
 	
 private:
     

@@ -1,8 +1,11 @@
 #include "CheckVector.h"
+
+#include <vcruntime.h>
+
 #include "chrono"
 #include "iostream"
 
-namespace 
+namespace
 {
     using namespace std::chrono;
 }
