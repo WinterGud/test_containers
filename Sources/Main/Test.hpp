@@ -254,7 +254,7 @@ void testSomething(std::function<void(IntContainer& container)>& funcInt
 				  ,std::function<void(Strc2Container& container)>& funcStrc2
 				  ,std::function<void(MatrContainer& container)>& funcMatr)
 {
-	std::cout << "Filled:\n--------------------------------------------------------------------";
+	std::cout << "Filled:\n--------------------------------------------------------------------\n";
 	{
 		IntContainer v1(NUM_TO_TEST);
 		v1.clear();
@@ -269,7 +269,7 @@ void testSomething(std::function<void(IntContainer& container)>& funcInt
 		v4.clear();
 		funcMatr(v4);
 	}
-	std::cout << "Not Filled:\n--------------------------------------------------------------------";
+	std::cout << "\nNot Filled:\n--------------------------------------------------------------------\n";
 	{
 		IntContainer v1;
 		funcInt(v1);
@@ -284,5 +284,9 @@ void testSomething(std::function<void(IntContainer& container)>& funcInt
 
 void test()
 {
-	
+	std::function<void(IntVec&)> intFunc = pushBack<IntVec, int>;
+	std::function<void(Strc1Vec&)> Strc1Func = pushBack<Strc1Vec, strc1>;
+	std::function<void(Strc2Vec&)> Strc2Func = pushBack<Strc2Vec, strc2>;
+	std::function<void(MatrVec&)> MatrFunc = pushBack<MatrVec, matrix>;
+	testSomething<IntVec, Strc1Vec, Strc2Vec, MatrVec>(intFunc, Strc1Func, Strc2Func, MatrFunc);
 }

@@ -4,7 +4,7 @@
 
 int main()
 {
-	testVector();
+	test();
 	
 	return 0;
 }
