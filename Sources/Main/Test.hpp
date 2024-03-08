@@ -13,12 +13,12 @@ namespace
 	unsigned long long NUM_TO_TEST = 10000;
 	struct strc1
 	{
-		#define sizeArr 100
-		int arr[sizeArr];
+		const int SIZE_ARR = 100;
+		int arr[100];
 		int n = 0;
 		strc1()
 		{
-			for (int i = 0; i < sizeArr; ++i)
+			for (int i = 0; i < SIZE_ARR; ++i)
 			{
 				arr[i] = n + 1;
 			}
@@ -27,7 +27,7 @@ namespace
 
 		strc1(int i): n(i)
 		{
-			for (int i = 0; i < sizeArr; ++i)
+			for (int i = 0; i < SIZE_ARR; ++i)
 			{
 				arr[i] = n + 1;
 			}
@@ -167,7 +167,7 @@ void alternativePushFront(Container& container)
 template <typename Container,typename T>
 void insertInMiddle(Container& container)
 {
-	fillContainer(container);
+	fillContainer<Container, T>(container);
 	auto middleIterator = container.begin();
 	for(auto i = 0; i < container.size() / 2; i++)
 	{
@@ -247,46 +247,93 @@ void erase(Container& container)
 	std::cout << time_span.count() << " seconds.\n";
 }
 
-
 template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
-void testSomething(std::function<void(IntContainer& container)>& funcInt
+void testFilledContainer(std::function<void(IntContainer& container)>& funcInt
 				  ,std::function<void(Strc1Container& container)>& funcStrc1
 				  ,std::function<void(Strc2Container& container)>& funcStrc2
 				  ,std::function<void(MatrContainer& container)>& funcMatr)
 {
 	std::cout << "Filled:\n--------------------------------------------------------------------\n";
 	{
+		std::cout << "IntContainer\n";
 		IntContainer v1(NUM_TO_TEST);
 		v1.clear();
 		funcInt(v1);
+		std::cout << "Strc1Container\n";
 		Strc1Container v2(NUM_TO_TEST);
 		v2.clear();
 		funcStrc1(v2);
+		std::cout << "Strc2Container\n";
 		Strc2Container v3(NUM_TO_TEST);
 		v3.clear();
 		funcStrc2(v3);
+		std::cout << "MatrContainer\n";
 		MatrContainer v4(NUM_TO_TEST);
 		v4.clear();
 		funcMatr(v4);
 	}
+}
+
+template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
+void testVoidContainer(std::function<void(IntContainer& container)>& funcInt
+				  ,std::function<void(Strc1Container& container)>& funcStrc1
+				  ,std::function<void(Strc2Container& container)>& funcStrc2
+				  ,std::function<void(MatrContainer& container)>& funcMatr)
+{
 	std::cout << "\nNot Filled:\n--------------------------------------------------------------------\n";
 	{
+		std::cout << "IntContainer\n";
 		IntContainer v1;
 		funcInt(v1);
+		std::cout << "Strc1Container\n";
 		Strc1Container v2;
 		funcStrc1(v2);
+		std::cout << "Strc2Container\n";
 		Strc2Container v3;
 		funcStrc2(v3);
+		std::cout << "MatrContainer\n";
 		MatrContainer v4;
 		funcMatr(v4);
 	}
 }
 
+template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
+void pushFuncInTestFilledContainer()
+{
+	std::function<void(IntContainer&)> intFunc = pushBack<IntContainer, int>;
+	std::function<void(Strc1Container&)> Strc1Func = pushBack<Strc1Container, strc1>;
+	std::function<void(Strc2Container&)> Strc2Func = pushBack<Strc2Container, strc2>;
+	std::function<void(MatrContainer&)> MatrFunc = pushBack<MatrContainer, matrix>;
+	
+	testFilledContainer<IntContainer, Strc1Container, Strc2Container, MatrContainer>(intFunc, Strc1Func, Strc2Func, MatrFunc);
+}
+
+template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
+void pushFuncInTestVoidContainer()
+{
+	if (true)
+	{
+		
+	}
+	std::function<void(IntContainer&)> intFunc = pushBack<IntContainer, int>;
+	std::function<void(Strc1Container&)> Strc1Func = pushBack<Strc1Container, strc1>;
+	std::function<void(Strc2Container&)> Strc2Func = pushBack<Strc2Container, strc2>;
+	std::function<void(MatrContainer&)> MatrFunc = pushBack<MatrContainer, matrix>;
+	
+	testVoidContainer<IntContainer, Strc1Container, Strc2Container, MatrContainer>(intFunc, Strc1Func, Strc2Func, MatrFunc);
+}
+
+void testVector()
+{
+	std::cout << "Vector\n===============================================================================================\n";
+	pushFuncInTestFilledContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
+	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
+	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
+	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
+	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
+}
+
 void test()
 {
-	std::function<void(IntVec&)> intFunc = pushBack<IntVec, int>;
-	std::function<void(Strc1Vec&)> Strc1Func = pushBack<Strc1Vec, strc1>;
-	std::function<void(Strc2Vec&)> Strc2Func = pushBack<Strc2Vec, strc2>;
-	std::function<void(MatrVec&)> MatrFunc = pushBack<MatrVec, matrix>;
-	testSomething<IntVec, Strc1Vec, Strc2Vec, MatrVec>(intFunc, Strc1Func, Strc2Func, MatrFunc);
+	
 }
