@@ -188,33 +188,6 @@ void insertInMiddle(Container& container)
 	std::cout << time_span.count() << " seconds.\n";
 }
 
-template <typename Container, typename T>
-void alternativeInsertInMiddle(Container& container)
-{
-	fillContainer(container);
-	auto middleIterator = container.begin();
-	for(auto i = 0; i < container.size() / 2; i++)
-	{
-		++middleIterator;
-	}
-
-	using namespace std::chrono;
-	steady_clock::time_point timeStart = steady_clock::now();
-	
-	for (auto i = 0; i < NUM_TO_TEST; i++)
-	{
-		container.insert(middleIterator, T(i));
-		if (i > 5 && middleIterator != container.end())
-		{
-			it++;
-		}
-	}
-    
-	steady_clock::time_point timeEnd = steady_clock::now();
-	duration<double> time_span = duration_cast<duration<double>>(timeEnd - timeStart);
-	std::cout << time_span.count() << " seconds.\n";
-}
-
 template <typename Container,typename T>
 void find(Container& container)
 {
@@ -298,23 +271,8 @@ void testVoidContainer(std::function<void(IntContainer& container)>& funcInt
 }
 
 template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
-void pushFuncInTestFilledContainer()
+void finalPushBackForVoidContainer()
 {
-	std::function<void(IntContainer&)> intFunc = pushBack<IntContainer, int>;
-	std::function<void(Strc1Container&)> Strc1Func = pushBack<Strc1Container, strc1>;
-	std::function<void(Strc2Container&)> Strc2Func = pushBack<Strc2Container, strc2>;
-	std::function<void(MatrContainer&)> MatrFunc = pushBack<MatrContainer, matrix>;
-	
-	testFilledContainer<IntContainer, Strc1Container, Strc2Container, MatrContainer>(intFunc, Strc1Func, Strc2Func, MatrFunc);
-}
-
-template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
-void pushFuncInTestVoidContainer()
-{
-	if (true)
-	{
-		
-	}
 	std::function<void(IntContainer&)> intFunc = pushBack<IntContainer, int>;
 	std::function<void(Strc1Container&)> Strc1Func = pushBack<Strc1Container, strc1>;
 	std::function<void(Strc2Container&)> Strc2Func = pushBack<Strc2Container, strc2>;
@@ -323,10 +281,12 @@ void pushFuncInTestVoidContainer()
 	testVoidContainer<IntContainer, Strc1Container, Strc2Container, MatrContainer>(intFunc, Strc1Func, Strc2Func, MatrFunc);
 }
 
+
+
 void testVector()
 {
 	std::cout << "Vector\n===============================================================================================\n";
-	pushFuncInTestFilledContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
+	//pushFuncInTestFilledContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
 	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
 	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
 	// testContainer<IntVec, Strc1Vec, Strc2Vec, MatrVec>();
