@@ -220,65 +220,69 @@ void erase(Container& container)
 	std::cout << time_span.count() << " seconds.\n";
 }
 
-template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
-void testFilledContainer(std::function<void(IntContainer& container)>& funcInt
-				  ,std::function<void(Strc1Container& container)>& funcStrc1
-				  ,std::function<void(Strc2Container& container)>& funcStrc2
-				  ,std::function<void(MatrContainer& container)>& funcMatr)
+template <template<typename...> class ContainerType>
+void testFilledContainer(std::function<void(ContainerType<int>& container)>& funcInt
+				  ,std::function<void(ContainerType<strc1>& container)>& funcStrc1
+				  ,std::function<void(ContainerType<strc2>& container)>& funcStrc2
+				  ,std::function<void(ContainerType<matrix>& container)>& funcMatr)
 {
 	std::cout << "Filled:\n--------------------------------------------------------------------\n";
 	{
 		std::cout << "IntContainer\n";
-		IntContainer v1(NUM_TO_TEST);
-		v1.clear();
-		funcInt(v1);
+		auto intContainer = ContainerType<int>(NUM_TO_TEST);
+		intContainer.clear();
+		funcInt(intContainer);
 		std::cout << "Strc1Container\n";
-		Strc1Container v2(NUM_TO_TEST);
-		v2.clear();
-		funcStrc1(v2);
+		auto strc1Container = ContainerType<strc1>(NUM_TO_TEST);
+		strc1Container.clear();
+		funcStrc1(strc1Container);
 		std::cout << "Strc2Container\n";
-		Strc2Container v3(NUM_TO_TEST);
-		v3.clear();
-		funcStrc2(v3);
+		auto strc2Container = ContainerType<strc2>(NUM_TO_TEST);
+		strc2Container.clear();
+		funcStrc2(strc2Container);
 		std::cout << "MatrContainer\n";
-		MatrContainer v4(NUM_TO_TEST);
-		v4.clear();
-		funcMatr(v4);
+		auto matrContainer = ContainerType<matrix>(NUM_TO_TEST);
+		matrContainer.clear();
+		funcMatr(matrContainer);
 	}
 }
 
-template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
-void testVoidContainer(std::function<void(IntContainer& container)>& funcInt
-				  ,std::function<void(Strc1Container& container)>& funcStrc1
-				  ,std::function<void(Strc2Container& container)>& funcStrc2
-				  ,std::function<void(MatrContainer& container)>& funcMatr)
+template <template<typename...> class ContainerType>
+void testVoidContainer(std::function<void(ContainerType<int>& container)>& funcInt
+				  ,std::function<void(ContainerType<strc1>& container)>& funcStrc1
+				  ,std::function<void(ContainerType<strc2>& container)>& funcStrc2
+				  ,std::function<void(ContainerType<matrix>& container)>& funcMatr)
 {
 	std::cout << "\nNot Filled:\n--------------------------------------------------------------------\n";
 	{
 		std::cout << "IntContainer\n";
-		IntContainer v1;
-		funcInt(v1);
+		auto intContainer = ContainerType<int>();
+		funcInt(intContainer);
 		std::cout << "Strc1Container\n";
-		Strc1Container v2;
-		funcStrc1(v2);
+		auto strc1Container = ContainerType<strc1>();
+		funcStrc1(strc1Container);
 		std::cout << "Strc2Container\n";
-		Strc2Container v3;
-		funcStrc2(v3);
+		auto strc2Container = ContainerType<strc2>();
+		funcStrc2(strc2Container);
 		std::cout << "MatrContainer\n";
-		MatrContainer v4;
-		funcMatr(v4);
+		auto matrContainer = ContainerType<matrix>();
+		funcMatr(matrContainer);
 	}
 }
 
-template <typename IntContainer, typename Strc1Container, typename Strc2Container, typename MatrContainer>
+template <template<typename...> class ContainerType>
 void finalPushBackForVoidContainer()
 {
-	std::function<void(IntContainer&)> intFunc = pushBack<IntContainer, int>;
-	std::function<void(Strc1Container&)> Strc1Func = pushBack<Strc1Container, strc1>;
-	std::function<void(Strc2Container&)> Strc2Func = pushBack<Strc2Container, strc2>;
-	std::function<void(MatrContainer&)> MatrFunc = pushBack<MatrContainer, matrix>;
+	using intContainer = ContainerType<int>;
+	using strc1Container = ContainerType<strc1>;
+	using strc2Container = ContainerType<strc2>;
+	using matrixContainer = ContainerType<matrix>;
+	std::function<void(intContainer&)> intFunc = pushBack<intContainer, int>;
+	std::function<void(strc1Container&)> Strc1Func = pushBack<strc1Container, strc1>;
+	std::function<void(strc2Container&)> Strc2Func = pushBack<strc2Container, strc2>;
+	std::function<void(matrixContainer&)> MatrFunc = pushBack<matrixContainer, matrix>;
 	
-	testVoidContainer<IntContainer, Strc1Container, Strc2Container, MatrContainer>(intFunc, Strc1Func, Strc2Func, MatrFunc);
+	testVoidContainer<ContainerType>(intFunc, Strc1Func, Strc2Func, MatrFunc);
 }
 
 
@@ -295,5 +299,6 @@ void testVector()
 
 void test()
 {
+	finalPushBackForVoidContainer<std::vector>();
 	
 }

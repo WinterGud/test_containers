@@ -7,7 +7,6 @@ project (Main)
 set(SOURCES
 	main.cpp
 	Test.hpp
-	Test.cpp
 )
 
 add_executable(Main ${SOURCES})
